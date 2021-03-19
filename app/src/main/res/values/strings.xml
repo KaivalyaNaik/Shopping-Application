@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">ShoppingApplication</string>
+    <string name="add_word">Add Item</string>
+    <string name="hint_quantity">Enter Quantity</string>
+    <string name="hint_item">Enter Item</string>
+
+    <string name="button_save">Save</string>
+    <string name="hint_url">Enter your URL</string>
+    <string name="quantityText">Quantity</string>
+    <string name="date_added">Date Added</string>
+</resources>
