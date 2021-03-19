@@ -11,10 +11,12 @@
         <androidx.appcompat.widget.Toolbar
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
+            app:contentInsetEnd="0dp"
+            app:contentInsetStart="0dp"
             />
 
         <ImageButton
-            android:id="@+id/imageButton"
+            android:id="@+id/backButton"
             android:layout_width="50dp"
             android:layout_height="match_parent"
             android:background="@android:color/transparent"

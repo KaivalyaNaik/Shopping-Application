@@ -8,15 +8,29 @@
     android:background="@color/teal_200"
     tools:context=".activities.MainActivity">
 
-    <Button
-        android:id="@+id/nextPage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <include
+        android:id="@+id/include4"
+        layout="@layout/tool_bar" />
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewPagerHome"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:text="Next Page"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/include4"
+        app:layout_constraintVertical_bias="0.0">
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+        </com.google.android.material.tabs.TabLayout>
+    </androidx.viewpager.widget.ViewPager>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -8,6 +8,8 @@ import android.os.Bundle
 import android.view.DragEvent
 import android.view.MotionEvent
 import android.view.View
+import android.widget.Button
+import android.widget.ImageButton
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
@@ -71,6 +73,10 @@ class ItemList : AppCompatActivity() ,View.OnTouchListener{
             val myShadow= View.DragShadowBuilder(fab)
             it.startDragAndDrop(null,myShadow,null,View.DRAG_FLAG_GLOBAL)
             true
+        }
+        val backButton: ImageButton =findViewById(R.id.backButton)
+        backButton.setOnClickListener {
+            finish()
         }
 
     }
