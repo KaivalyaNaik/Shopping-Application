@@ -20,7 +20,6 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.FileProvider
-import com.cocosw.bottomsheet.BottomSheet
 import com.example.shoppingapplication.BuildConfig
 import com.example.shoppingapplication.R
 import com.google.android.material.bottomsheet.BottomSheetDialog

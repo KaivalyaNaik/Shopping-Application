@@ -9,10 +9,6 @@ import java.lang.IllegalArgumentException
 class ItemViewModel(private val itemRepository: ItemRepository):ViewModel() {
     val allItems:LiveData<List<Item>> =itemRepository.allItems.asLiveData()
 
-    fun delete(item: Item)=viewModelScope.launch {
-        itemRepository.delete(item)
-    }
-
     fun insert(item: Item)=viewModelScope.launch{
         itemRepository.insert(item)
     }

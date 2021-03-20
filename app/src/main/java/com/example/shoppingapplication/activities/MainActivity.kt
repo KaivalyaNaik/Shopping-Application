@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
         val viewPager:ViewPager =findViewById(R.id.viewPagerHome)
         val adapter=HomePageAdapter(supportFragmentManager)
 
-        adapter.addFragment(HomeFragment(),"Home")
+        adapter.addFragment(HomeFragment(application),"Home")
 
         adapter.addFragment(Home2Fragment(),"View 2")
 
