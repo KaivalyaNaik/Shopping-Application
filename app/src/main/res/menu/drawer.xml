@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view"
+    >
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/listingPage"
+            android:icon="@android:drawable/ic_menu_info_details"
+            android:title="Listing Page"
+            />
+
+        <item
+            android:id="@+id/Profile"
+            android:icon="@drawable/ic_baseline_person_24"
+            android:title="Profile"
+            />
+
+        <item
+            android:id="@+id/logout"
+            android:icon="@drawable/ic_baseline_power_settings_new_24"
+            android:title="Logout"
+            />
+    </group>
+
+
+    <group
+        android:id="@+id/extra"
+        android:checkableBehavior="single"
+        android:enabled="true"
+        android:orderInCategory="0"
+        android:visible="true" />
+
+</menu>

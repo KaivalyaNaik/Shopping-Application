@@ -2,12 +2,15 @@ package com.example.shoppingapplication.activities.homeScreens
 
 import android.app.Application
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import android.view.DragEvent
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.viewModels
 import com.example.shoppingapplication.R
 import com.example.shoppingapplication.ShoppingApplication
@@ -28,6 +31,7 @@ class HomeFragment(val application: Application): Fragment() {
 
     }
 
+    @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreateView(
 
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,6 +44,34 @@ class HomeFragment(val application: Application): Fragment() {
         button.setOnClickListener {
             val intent= Intent(view.context, ItemList::class.java)
             startActivity(intent)
+        }
+
+        val root=view
+        var dX:Float=0F
+        var dY:Float=0F
+        root.setOnDragListener { v, event ->
+
+            when(event.action){
+                DragEvent.ACTION_DRAG_LOCATION->{
+                    dX=event.x
+                    dY=event.y
+                }
+                DragEvent.ACTION_DRAG_ENDED->{
+                    button.x=(dX-button.width/2)
+                    button.y=dY-button.width/2
+                }
+            }
+            true
+        }
+
+        button.setOnLongClickListener {
+            val myShadow= View.DragShadowBuilder(button)
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+                it.startDragAndDrop(null,myShadow,null,View.DRAG_FLAG_GLOBAL)
+            else
+                it.startDrag(null,myShadow,null,View.DRAG_FLAG_GLOBAL)
+
+            true
         }
         return view
     }

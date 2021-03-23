@@ -17,7 +17,7 @@ class HomePageAdapter (val fm:FragmentManager): FragmentPagerAdapter(fm) {
     }
 
     override fun getCount(): Int {
-    return 3
+    return 4
     }
 
     override fun getItem(position: Int): Fragment {

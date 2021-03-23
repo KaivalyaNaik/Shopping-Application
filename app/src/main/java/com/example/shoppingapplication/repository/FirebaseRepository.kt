@@ -1,6 +1,7 @@
 package com.example.shoppingapplication.repository
 
 import android.app.Application
+import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.auth.FirebaseAuth
@@ -20,6 +21,9 @@ class FirebaseRepository(val application: Application){
         this.userLiveData= MutableLiveData(firebaseAuth.currentUser)
         if(userLiveData.value !=null)
             this.loggedOut=MutableLiveData(false)
+        else
+            this.loggedOut=MutableLiveData(true)
+
     }
 
     fun login(email: String, password: String){
@@ -40,11 +44,13 @@ class FirebaseRepository(val application: Application){
     fun register(email: String, password: String,name:String){
         firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener{
             if(it.isSuccessful){
-                userLiveData.postValue(firebaseAuth.currentUser)
+                userLiveData.value=(firebaseAuth.currentUser)
 
                 val profileChangeRequest=UserProfileChangeRequest.Builder()
-                profileChangeRequest.displayName=name
-                userLiveData.value?.updateProfile(profileChangeRequest.build())
+                profileChangeRequest.setDisplayName(name)
+                val request=profileChangeRequest.build()
+                Log.d("Register",profileChangeRequest.displayName)
+                userLiveData.value?.updateProfile(request)
             }else{
 
                 Toast.makeText(

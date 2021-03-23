@@ -17,6 +17,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.FileProvider
@@ -49,13 +50,13 @@ class NewItem : AppCompatActivity() {
 
         val button =findViewById<Button>(R.id.button_save)
         val addImage =findViewById<Button>(R.id.addImage)
+
         button.setOnClickListener{
             val replyIntent = Intent()
             if(TextUtils.isEmpty(edit_name.text)){
                 setResult(Activity.RESULT_CANCELED,replyIntent)
             }
             else{
-                val layout=findViewById<View>(R.id.addNewItem)
                 val name=  edit_name.text.toString()
                 val quantity=edit_quantity.text.toString()
                 replyIntent.putExtra("name",name)

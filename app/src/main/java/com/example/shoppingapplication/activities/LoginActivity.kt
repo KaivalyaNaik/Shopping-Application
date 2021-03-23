@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.EditText
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -33,8 +34,8 @@ class LoginActivity : AppCompatActivity() {
         })
 
 
-        val emailText=findViewById<TextInputEditText>(R.id.editEmail)
-        val password=findViewById<TextInputEditText>(R.id.editPassword)
+        val emailText=findViewById<EditText>(R.id.editEmail)
+        val password=findViewById<EditText>(R.id.editPassword)
 
         val loginButton:Button =findViewById(R.id.loginButton)
         val registerButton:Button=findViewById(R.id.registerButton)

@@ -2,15 +2,18 @@ package com.example.shoppingapplication.activities
 
 import android.app.Activity
 import android.content.Intent
+import android.media.Image
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.DragEvent
 import android.view.MotionEvent
 import android.view.View
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.Toast
+import android.widget.Toolbar
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.Observer
@@ -22,10 +25,12 @@ import com.example.shoppingapplication.data.Item
 import com.example.shoppingapplication.ui.ItemListAdapter
 import com.example.shoppingapplication.ui.ItemViewModel
 import com.example.shoppingapplication.ui.ItemViewModelFactory
+import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.activity_item_list.view.*
 
-class ItemList : AppCompatActivity() ,View.OnTouchListener{
+class ItemList : AppCompatActivity() {
     private val itemViewModel: ItemViewModel by viewModels {
         ItemViewModelFactory((application as ShoppingApplication).repository)
     }
@@ -37,7 +42,12 @@ class ItemList : AppCompatActivity() ,View.OnTouchListener{
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_item_list)
 
+
+
         val root=findViewById<View>(R.id.item_list)
+
+
+        val appBarLayout =findViewById<AppBarLayout>(R.id.app_bar)
 
         val recyclerView= findViewById<RecyclerView>(R.id.recyclerview)
         val adapter= ItemListAdapter()
@@ -71,13 +81,19 @@ class ItemList : AppCompatActivity() ,View.OnTouchListener{
         }
         fab.setOnLongClickListener {
             val myShadow= View.DragShadowBuilder(fab)
-            it.startDragAndDrop(null,myShadow,null,View.DRAG_FLAG_GLOBAL)
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+                it.startDragAndDrop(null,myShadow,null,View.DRAG_FLAG_GLOBAL)
+            else
+                it.startDrag(null,myShadow,null,View.DRAG_FLAG_GLOBAL)
             true
         }
-        val backButton: ImageButton =findViewById(R.id.backButton)
-        backButton.setOnClickListener {
-            finish()
-        }
+       /* appBarLayout.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener{
+            appBarLayout, verticalOffset ->
+            Log.d("vertical offset",appBarLayout.totalScrollRange.toString())
+
+            appBarLayout.imageView2.alpha=((appBarLayout.imageView2.alpha-0)/341)*1  +0
+        })
+*/
 
     }
 
@@ -116,49 +132,9 @@ class ItemList : AppCompatActivity() ,View.OnTouchListener{
         }
     }
 
-    override fun onTouch(v: View?, event: MotionEvent?): Boolean {
+    private fun updateAppbarView(offset:Float){
 
-
-        if (event != null && v!=null) {
-            var dx:Float = 0F
-            var dy:Float =0F
-            var lastAction:Int=0
-
-            when(event.actionMasked){
-                MotionEvent.ACTION_DOWN -> {
-                    dx = v.x -event.rawX
-                    dy =v.y -event.rawY
-                    lastAction =MotionEvent.ACTION_DOWN
-                }
-                MotionEvent.ACTION_MOVE->{
-                    val newX=dx +event.rawX
-                    val newY=dy +event.rawY
-
-                    v.animate().x(newX).y(newY).setDuration(0).start()
-                    lastAction=MotionEvent.ACTION_MOVE
-                }
-                MotionEvent.ACTION_UP->{
-                    val x=event.rawX
-                    val y=event.rawY
-
-                    val upX=x-dx
-                    val upY=y-dy
-
-                    if(Math.abs(upX) <1 && Math.abs(upY)<1) {
-                        val intent = Intent(this, NewItem::class.java)
-                        startActivityForResult(intent, newItemActivityRequestCode)
-                        return false
-                    }
-                    else
-                        return false
-                }
-                else->{
-                    return super.onTouchEvent(event)
-                }
-
-
-            }
-        }
-        return true
     }
+
+
 }
