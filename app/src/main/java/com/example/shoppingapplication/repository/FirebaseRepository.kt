@@ -4,9 +4,17 @@ import android.app.Application
 import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
+import com.example.shoppingapplication.data.User
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.UserProfileChangeRequest
+import com.google.firebase.crashlytics.FirebaseCrashlytics
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.messaging.FirebaseMessagingService
+import java.text.SimpleDateFormat
 
 class FirebaseRepository(val application: Application){
 
@@ -16,6 +24,15 @@ class FirebaseRepository(val application: Application){
 
     private lateinit var loggedOut :MutableLiveData<Boolean>
 
+
+    val firebaseAnalytics: FirebaseAnalytics = Firebase.analytics
+
+    private lateinit var firestore: FirebaseFirestore
+
+    private lateinit var user:MutableLiveData<User>
+
+
+
     init {
         firebaseAuth = FirebaseAuth.getInstance()
         this.userLiveData= MutableLiveData(firebaseAuth.currentUser)
@@ -24,12 +41,18 @@ class FirebaseRepository(val application: Application){
         else
             this.loggedOut=MutableLiveData(true)
 
+        firestore= FirebaseFirestore.getInstance()
+        user= MutableLiveData(User("",SimpleDateFormat("dd-MM-yyyy").parse("20-10-2020"),
+                "","")
+        )
+
     }
 
     fun login(email: String, password: String){
         firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener{
             if(it.isSuccessful){
                 userLiveData.postValue(firebaseAuth.currentUser)
+                getUser()
             }
             else{
                 Toast.makeText(
@@ -41,17 +64,17 @@ class FirebaseRepository(val application: Application){
     }
 
 
-    fun register(email: String, password: String,name:String){
+    fun register(email: String, password: String,user: User){
         firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener{
             if(it.isSuccessful){
                 userLiveData.value=(firebaseAuth.currentUser)
 
-                val profileChangeRequest=UserProfileChangeRequest.Builder()
-                profileChangeRequest.setDisplayName(name)
-                val request=profileChangeRequest.build()
-                Log.d("Register",profileChangeRequest.displayName)
-                userLiveData.value?.updateProfile(request)
-            }else{
+                val profileChangeRequest=UserProfileChangeRequest.Builder().setDisplayName(user.name).build()
+            it.result?.user?.updateProfile(profileChangeRequest)
+
+                addUser(user)
+                getUser()
+           }else{
 
                 Toast.makeText(
                     application.applicationContext, "Registration Failed! " + (it.exception?.message
@@ -73,5 +96,26 @@ class FirebaseRepository(val application: Application){
 
     fun getLoggedOutLiveData(): MutableLiveData<Boolean> {
         return loggedOut
+    }
+
+    private fun addUser(user: User){
+
+        firestore.collection("users").document(firebaseAuth.currentUser.uid).set(user.toMap()).addOnCompleteListener {
+            Log.d("Register","User Added Successfully")
+        }
+    }
+
+    fun getUser():MutableLiveData<User>{
+        firestore.collection("users").document(firebaseAuth.currentUser.uid).get()
+                .addOnCompleteListener() {
+
+            val map:MutableMap<String,Any>? = it.result?.data
+                    Log.d("User Info",map.toString())
+            val tuser= map?.let { it1 -> User("",SimpleDateFormat("dd-MM-yyyy").parse("20-10-2020"),
+                    "","").fromMap(it1) }
+            user.postValue(tuser)
+
+        }
+        return user
     }
 }

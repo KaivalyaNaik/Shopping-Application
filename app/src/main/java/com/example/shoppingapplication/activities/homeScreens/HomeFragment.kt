@@ -17,6 +17,7 @@ import com.example.shoppingapplication.ShoppingApplication
 import com.example.shoppingapplication.activities.ItemList
 import com.example.shoppingapplication.ui.LoggedInViewModel
 import com.example.shoppingapplication.ui.LoggedInViewModelFactory
+import java.lang.RuntimeException
 
 
 class HomeFragment(val application: Application): Fragment() {
@@ -41,9 +42,9 @@ class HomeFragment(val application: Application): Fragment() {
         val view:View= inflater.inflate(R.layout.fragment_home, container, false)
         val button=view.findViewById<Button>(R.id.nextPage)
 
+        button.text="Crash!!"
         button.setOnClickListener {
-            val intent= Intent(view.context, ItemList::class.java)
-            startActivity(intent)
+           throw RuntimeException("Test Crash!")
         }
 
         val root=view

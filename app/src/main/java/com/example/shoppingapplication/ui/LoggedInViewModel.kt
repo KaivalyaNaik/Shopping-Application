@@ -3,6 +3,7 @@ package com.example.shoppingapplication.ui
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.example.shoppingapplication.data.User
 import com.example.shoppingapplication.repository.FirebaseRepository
 import com.google.firebase.auth.FirebaseUser
 import java.lang.IllegalArgumentException
@@ -10,6 +11,8 @@ import java.lang.IllegalArgumentException
 class LoggedInViewModel(private val firebaseRepository: FirebaseRepository):ViewModel(){
 
     private var userLiveData: MutableLiveData<FirebaseUser> = firebaseRepository.getUserLiveData()
+
+    private var user:MutableLiveData<User> =firebaseRepository.getUser()
 
     private var loggedOut:MutableLiveData<Boolean> = firebaseRepository.getLoggedOutLiveData()
 
@@ -23,6 +26,10 @@ class LoggedInViewModel(private val firebaseRepository: FirebaseRepository):View
 
     fun getLoggedOutLiveData(): MutableLiveData<Boolean> {
         return loggedOut
+    }
+
+    fun getUser():MutableLiveData<User>{
+        return user
     }
 }
 

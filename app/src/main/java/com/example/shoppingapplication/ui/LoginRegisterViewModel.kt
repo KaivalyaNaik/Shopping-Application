@@ -3,6 +3,7 @@ package com.example.shoppingapplication.ui
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.example.shoppingapplication.data.User
 import com.example.shoppingapplication.repository.FirebaseRepository
 import com.google.firebase.auth.FirebaseUser
 import java.lang.IllegalArgumentException
@@ -15,8 +16,8 @@ class LoginRegisterViewModel(private val firebaseRepository: FirebaseRepository)
         firebaseRepository.login(email,password)
     }
 
-    fun register(email: String,password: String,name:String){
-        firebaseRepository.register(email,password,name)
+    fun register(email: String,password: String,user:User){
+        firebaseRepository.register(email,password,user)
     }
 
     fun getUserLiveData():MutableLiveData<FirebaseUser>{

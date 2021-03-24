@@ -24,45 +24,115 @@
             android:text="REGISTER"
             android:textAlignment="center"
             android:textSize="22sp"
-            android:textColor="@color/black"
+            android:textColor="@color/purple_500"
             />
-        <com.google.android.material.textfield.TextInputEditText
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/nameWrapper"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="text"
-            android:hint="Name"
-            android:id="@+id/editName"
-            android:layout_marginTop="10dp"
-            android:outlineProvider="paddedBounds"
-            android:outlineSpotShadowColor="@color/teal_200"
-            android:outlineAmbientShadowColor="@color/teal_200"
-            android:layout_marginBottom="10dp"
-            />
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textEmailAddress"
-            android:hint="Email"
-            android:id="@+id/editRegisterEmail"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:outlineProvider="paddedBounds"
-            android:outlineAmbientShadowColor="@color/teal_200"
-            android:outlineSpotShadowColor="@color/teal_200"
-            />
 
-        <com.google.android.material.textfield.TextInputEditText
+            android:paddingStart="10dp"
+            android:layout_marginTop="10dp"
+            android:paddingEnd="10dp">
+
+            <EditText
+                android:background="@color/white"
+                android:id="@+id/editName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:hint="Name"
+                android:nextFocusDown="@+id/street"
+                android:textSize="14sp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/emailWrapper"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPassword"
-            android:hint="Password"
-            android:id="@+id/editRegisterPassword"
+            android:paddingStart="10dp"
+            android:layout_marginTop="4dp"
+            android:paddingEnd="10dp">
+
+            <EditText
+                android:background="@color/white"
+                android:id="@+id/editRegisterEmail"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Email"
+                android:inputType="textEmailAddress"
+                android:nextFocusDown="@+id/street"
+                android:textSize="14sp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/passwordWrapper"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:paddingStart="10dp"
             android:layout_marginTop="10dp"
-            android:outlineProvider="paddedBounds"
-            android:outlineSpotShadowColor="@color/teal_200"
-            android:outlineAmbientShadowColor="@color/teal_200"
-            android:layout_marginBottom="10dp"
-            />
+            android:paddingEnd="10dp">
+
+            <EditText
+                android:background="@color/white"
+                android:id="@+id/editRegisterPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:hint="Password"
+                android:nextFocusDown="@+id/street"
+                android:textSize="14sp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/companyWrapper"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="10dp"
+            android:layout_marginTop="4dp"
+            android:paddingEnd="10dp">
+
+            <EditText
+                android:background="@color/white"
+                android:id="@+id/editCompany"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Company"
+                android:inputType="text"
+                android:nextFocusDown="@+id/street"
+                android:textSize="14sp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+        <LinearLayout
+            android:id="@+id/dateWrapper"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:paddingStart="11dp"
+            android:layout_marginTop="20dp"
+            android:paddingEnd="10dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:labelFor="@+id/editDate"
+                android:text="Date of Birth "
+                />
+            <TextView
+
+                android:background="@color/white"
+                android:id="@+id/editDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Date Of Birth"
+                android:nextFocusDown="@+id/street"
+                android:textSize="14sp" />
+
+        </LinearLayout>
 
 
 

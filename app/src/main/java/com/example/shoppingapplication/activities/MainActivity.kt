@@ -1,33 +1,29 @@
 package com.example.shoppingapplication.activities
 
-import android.app.ActionBar
 import android.app.AlertDialog
-import android.app.Application
-import android.content.DialogInterface
 import android.content.Intent
-import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.*
-import android.widget.Button
 import android.widget.ImageButton
-import android.widget.TextView
-import android.widget.Toolbar
 import androidx.activity.viewModels
-import androidx.navigation.NavController
-import androidx.navigation.findNavController
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.core.view.GravityCompat
 import androidx.viewpager.widget.ViewPager
 import com.example.shoppingapplication.R
 import com.example.shoppingapplication.ShoppingApplication
 import com.example.shoppingapplication.activities.homeScreens.*
 import com.example.shoppingapplication.ui.LoggedInViewModel
 import com.example.shoppingapplication.ui.LoggedInViewModelFactory
-import com.google.android.material.appbar.AppBarLayout
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.material.navigation.NavigationView
 import com.google.android.material.tabs.TabLayout
-import kotlinx.android.synthetic.main.activity_main.*
+import com.google.firebase.messaging.FirebaseMessaging
+import com.google.firebase.messaging.FirebaseMessagingService
+import kotlinx.android.synthetic.main.activity_drawer.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
 
 
@@ -37,9 +33,10 @@ class MainActivity : AppCompatActivity() {
         LoggedInViewModelFactory((application as ShoppingApplication).firebaseRepository)
     }
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_drawer)
 
 
 
@@ -51,10 +48,16 @@ class MainActivity : AppCompatActivity() {
 
         setSupportActionBar(toolbar)
 
-        val name=loggedInViewModel.getUserLiveData().value?.email
+        val name=loggedInViewModel.getUserLiveData().value?.displayName
 
-        val title:TextView=findViewById(R.id.toolBarTitle)
-        title.setText("Hello ,"+name)
+
+
+        val toggle=ActionBarDrawerToggle(this,drawer_layout,toolbar,R.string.nav_app_bar_open_drawer_description  ,R.string.navigation_drawer_close)
+        drawer_layout.addDrawerListener(toggle)
+        toggle.syncState()
+        navigation_view.setNavigationItemSelectedListener(this)
+
+
 
         val viewPager:ViewPager =findViewById(R.id.viewPagerHome)
         val adapter=HomePageAdapter(supportFragmentManager)
@@ -71,26 +74,43 @@ class MainActivity : AppCompatActivity() {
         val tabLayout:TabLayout =findViewById(R.id.tabLayout)
         tabLayout.setupWithViewPager(viewPager)
 
+
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener {
+            if(!it.isSuccessful){
+                Log.w("Notification",it.exception)
+            }
+            val token=it.result
+        })
+
+
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.toolbar,menu)
+
+
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        val alertDialog=AlertDialog.Builder(this).setTitle("Logout ?")
+            .setMessage("Are you sure you want to Logout").setPositiveButton("YES"
+            ) { dialog, which -> loggedInViewModel.logOut()
+                val intent=Intent(this,LoginActivity::class.java)
+                startActivity(intent)
+                finish()}.setNegativeButton("NO",null).create()
+        when(item.itemId){
+            R.id.listingPage->{
+                val intent=Intent(this,ItemList::class.java)
+                startActivity(intent)
+            }
+            R.id.profile->{
+                val intent=Intent(this,ProfileActivity::class.java)
+                startActivity(intent)
+            }
+            R.id.logout->{
+                Log.d("Navigation","Logout")
+                alertDialog.show()
+            }
+        }
+        drawer_layout.closeDrawer(GravityCompat.START)
         return true
     }
 
-        override fun onOptionsItemSelected(item: MenuItem): Boolean {
-            val alertDialog=AlertDialog.Builder(this).setTitle("Logout ?")
-                    .setMessage("Are you sure you want to Logout").setPositiveButton("YES"
-                    ) { dialog, which -> loggedInViewModel.logOut()
-                        val intent=Intent(this,LoginActivity::class.java)
-                        startActivity(intent)
-                        finish()}.setNegativeButton("NO",null).create()
 
-            Log.i("On  Options Selected",item.itemId.toString())
-            if(item.itemId ==R.id.signOut) {
-                alertDialog.show()
-            }
-            return super.onContextItemSelected(item)
-        }
-    
 }

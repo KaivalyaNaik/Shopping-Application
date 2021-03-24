@@ -15,15 +15,18 @@ import com.example.shoppingapplication.repository.FirebaseRepository
 import com.example.shoppingapplication.ui.LoginRegisterViewModel
 import com.example.shoppingapplication.ui.LoginRegisterViewModelFactory
 import com.google.android.material.textfield.TextInputEditText
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 
 class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+
         setContentView(R.layout.activity_login)
         val loginRegisterViewModel :LoginRegisterViewModel by viewModels {
             LoginRegisterViewModelFactory((application as ShoppingApplication).firebaseRepository)
         }
+
         loginRegisterViewModel.getUserLiveData().observe(this, Observer {
             if(it!=null){
 
