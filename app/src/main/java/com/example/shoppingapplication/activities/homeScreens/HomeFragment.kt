@@ -2,8 +2,10 @@ package com.example.shoppingapplication.activities.homeScreens
 
 import android.app.Application
 import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.DragEvent
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -17,6 +19,12 @@ import com.example.shoppingapplication.ShoppingApplication
 import com.example.shoppingapplication.activities.ItemList
 import com.example.shoppingapplication.ui.LoggedInViewModel
 import com.example.shoppingapplication.ui.LoggedInViewModelFactory
+import com.google.android.gms.ads.AdListener
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
+import com.google.android.gms.ads.LoadAdError
+import com.google.android.gms.ads.interstitial.InterstitialAd
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import java.lang.RuntimeException
 
 
@@ -74,6 +82,24 @@ class HomeFragment(val application: Application): Fragment() {
 
             true
         }
+
+        val adView =view.findViewById<AdView>(R.id.adView)
+        val adRequest=AdRequest.Builder().build()
+        adView.loadAd(adRequest)
+
+        adView.adListener=object :AdListener(){
+            override fun onAdOpened() {
+                Log.d("AdMob","Ad Opened")
+                super.onAdOpened()
+            }
+
+            override fun onAdClicked() {
+                Log.d("AdMob","Ad Clicked")
+                super.onAdClicked()
+            }
+        }
+
+
         return view
     }
 

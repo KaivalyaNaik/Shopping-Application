@@ -16,16 +16,20 @@ import com.example.shoppingapplication.ShoppingApplication
 import com.example.shoppingapplication.activities.homeScreens.*
 import com.example.shoppingapplication.ui.LoggedInViewModel
 import com.example.shoppingapplication.ui.LoggedInViewModelFactory
+import com.example.shoppingapplication.util.MyAnalytics
+import com.google.android.gms.ads.AdError
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.FullScreenContentCallback
+import com.google.android.gms.ads.LoadAdError
+import com.google.android.gms.ads.interstitial.InterstitialAd
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.tabs.TabLayout
 import com.google.firebase.messaging.FirebaseMessaging
-import com.google.firebase.messaging.FirebaseMessagingService
 import kotlinx.android.synthetic.main.activity_drawer.*
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
-
-
 
 
 
@@ -64,11 +68,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         adapter.addFragment(HomeFragment(application),  "Home")
 
-        adapter.addFragment(Home2Fragment(),"Media Player")
+        adapter.addFragment(MediaPlayer(application),"Media Player")
 
-        adapter.addFragment(Home3Fragment(),"Video Player")
+        adapter.addFragment(VideoView(),"Video Player")
 
-        adapter.addFragment(WebViewFragment(),"WebView")
+        adapter.addFragment(WebView(),"WebView")
+
 
         viewPager.adapter=adapter
         val tabLayout:TabLayout =findViewById(R.id.tabLayout)

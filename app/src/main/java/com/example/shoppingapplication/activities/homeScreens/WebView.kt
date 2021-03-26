@@ -1,6 +1,5 @@
 package com.example.shoppingapplication.activities.homeScreens
 
-import android.graphics.Bitmap
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -13,10 +12,10 @@ import com.example.shoppingapplication.R
 
 /**
  * A simple [Fragment] subclass.
- * Use the [WebViewFragment.newInstance] factory method to
+ * Use the [WebView.newInstance] factory method to
  * create an instance of this fragment.
  */
-class WebViewFragment : Fragment() {
+class WebView : Fragment() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,7 +29,7 @@ class WebViewFragment : Fragment() {
         val view= inflater.inflate(R.layout.fragment_web_view, container, false)
 
         val url="https://android-developers.googleblog.com/"
-        val webView:WebView=view.findViewById(R.id.webView)
+        val webView: WebView =view.findViewById(R.id.webView)
 
         webView.settings.javaScriptEnabled=true
         webView.webViewClient = object : WebViewClient() {

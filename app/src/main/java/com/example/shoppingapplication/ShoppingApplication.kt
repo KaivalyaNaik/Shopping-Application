@@ -6,6 +6,8 @@ import android.widget.Toast
 import com.example.shoppingapplication.repository.FirebaseRepository
 import com.example.shoppingapplication.repository.ItemDatabase
 import com.example.shoppingapplication.repository.ItemRepository
+import com.example.shoppingapplication.util.MyAdMob
+import com.example.shoppingapplication.util.MyAnalytics
 import com.example.shoppingapplication.util.MyFirebaseMessagingService
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.analytics.FirebaseAnalytics
@@ -24,7 +26,13 @@ class ShoppingApplication:Application() {
     val firebaseRepository by lazy {
         FirebaseRepository(this)
     }
-    val MyFirebaseMessagingService  by lazy {
+    val myAnalytics by lazy {
+        MyAnalytics()
+    }
+    val myAdMob by lazy {
+        MyAdMob(this)
+    }
+    val myFirebaseMessagingService  by lazy {
         MyFirebaseMessagingService()
     }
 

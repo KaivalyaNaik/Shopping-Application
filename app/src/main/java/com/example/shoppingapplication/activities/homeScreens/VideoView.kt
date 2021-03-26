@@ -10,7 +10,7 @@ import android.widget.MediaController
 import android.widget.VideoView
 import com.example.shoppingapplication.R
 
-class Home3Fragment : Fragment() {
+class VideoView : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
