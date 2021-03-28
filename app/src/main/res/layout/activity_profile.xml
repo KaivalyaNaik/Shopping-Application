@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
 
+    app:layoutDescription="@xml/activity_profile_scene"
     tools:context=".activities.ProfileActivity">
 
     <View
@@ -18,6 +19,7 @@
         app:layout_constraintStart_toStartOf="@+id/guideline3"
         app:layout_constraintTop_toBottomOf="@+id/profileCompany" />
 
+
     <include
         android:id="@+id/header_profile"
         layout="@layout/profileview"
@@ -27,12 +29,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-
     <View
         android:id="@+id/view"
         android:layout_width="0dp"
         android:layout_height="2dp"
-        android:background="@android:color/darker_gray"
+        android:background="@android:color/transparent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintLeft_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/header_profile" />
@@ -118,20 +119,15 @@
         app:layout_constraintHorizontal_bias="0.303"
         app:layout_constraintStart_toEndOf="@+id/profileCompany" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="29dp" />
 
-    <androidx.constraintlayout.widget.Barrier
-        android:id="@+id/barrier2"
+
+    <TextView
+        android:id="@+id/editNameEnd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:barrierDirection="left"
-        app:constraint_referenced_ids="profileEmail,profileCompany,profileDOB"
-        tools:layout_editor_absoluteX="411dp" />
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        android:text="TextView" />
 
     <androidx.constraintlayout.widget.Barrier
         android:id="@+id/barrier3"
@@ -148,5 +144,22 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_begin="426dp" />
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="29dp" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="left"
+        app:constraint_referenced_ids="profileEmail,profileCompany,profileDOB"
+        tools:layout_editor_absoluteX="411dp" />
+
+
+
+
+</androidx.constraintlayout.motion.widget.MotionLayout>
