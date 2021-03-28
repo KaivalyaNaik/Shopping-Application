@@ -39,8 +39,11 @@ class ProfileActivity : AppCompatActivity() {
 
         val user: User? = loggedInViewModel.getUser().value
 
+        val transitionName =findViewById<TextView>(R.id.editNameEnd)
+
         val firebaseUser: FirebaseUser? =loggedInViewModel.getUserLiveData().value
         if(user!=null){
+            transitionName.text=user.name
             name.text= user.name
             email.text=firebaseUser?.email.toString()
             company.text=user.company

@@ -15,7 +15,7 @@ abstract class ItemDatabase :RoomDatabase(){
 
     companion object{
         @Volatile
-        private var INSTANCE :ItemDatabase ?=null
+        var INSTANCE :ItemDatabase ?=null
 
         fun getDatabase(context: Context, scope: CoroutineScope):ItemDatabase{
             return INSTANCE ?: synchronized(this) {
